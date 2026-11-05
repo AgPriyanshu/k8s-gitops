@@ -1,0 +1,23 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: service-a
+  namespace: argocd          # Application objects always live in argocd's namespace
+spec:
+  project: default
+  source:
+    repoURL: git@github.com:AgPriyanshu/k8s-gitops.git   # replace with your repo
+    targetRevision: master                            # branch to track
+    path: infra/services/service-a                  # folder containing Chart.yaml
+    helm:
+      valueFiles:
+        - values.yaml
+  destination:
+    server: https://kubernetes.default.svc          # the cluster Argo runs in
+    namespace: default                            # where your app gets deployed
+  syncPolicy:
+    automated:
+      prune: true        # delete resources removed from Git
+      selfHeal: true     # revert manual changes made with kubectl
+    syncOptions:
+      - CreateNamespace=true

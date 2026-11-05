@@ -1,0 +1,28 @@
+# Argo CD Helm values for local learning on OrbStack
+
+global:
+  domain: localhost
+
+configs:
+  params:
+    # Serve plain HTTP so there's no self-signed cert warning behind port-forward
+    server.insecure: true
+  cm:
+    # Poll Git every 60s instead of the default 180s, so pushes show up faster
+    timeout.reconciliation: 60s
+
+# Components you don't need while learning (saves memory)
+dex:
+  enabled: false
+notifications:
+  enabled: false
+
+# Keep ApplicationSet on; you'll want it for app-of-apps / multi-env later
+applicationSet:
+  enabled: true
+
+server:
+  service:
+    # ClusterIP + port-forward is the default.
+    # On OrbStack you can instead use LoadBalancer and reach it at http://localhost
+    type: ClusterIP
