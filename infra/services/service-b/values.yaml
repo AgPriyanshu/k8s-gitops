@@ -1,0 +1,18 @@
+replicaCount: 1
+
+image:
+  repository: service-b
+  tag: latest
+
+containerPort: 81
+
+rabbitmq:
+  host: rabbitmq-service   # <release>-service of the message-queue release
+  port: 5672
+  username: guest
+  password: guest          # use a Secret for anything real
+  queue: demo-b
+
+service:
+  type: LoadBalancer
+  port: 81

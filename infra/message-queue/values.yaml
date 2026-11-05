@@ -1,0 +1,22 @@
+service:
+  clusterIP: None
+
+replicaCount: 1
+image:
+  repository: rabbitmq
+  tag: 4-management
+
+amqpPort: 5672
+
+managementPort: 15672
+
+management:
+  service:
+    type: LoadBalancer
+    port: 15672
+
+storage: 1Gi
+
+auth:
+  username: guest
+  password: guest   # use a Secret for anything real

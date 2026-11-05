@@ -1,0 +1,33 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-deployment
+  labels:
+    app: {{ .Chart.Name}}
+spec:
+  replicas: {{ .Values.replicaCount }}
+  selector:
+    matchLabels:
+      app: {{ .Chart.Name}}
+  template:
+    metadata:
+      labels:
+        app: {{ .Chart.Name}}
+    spec:
+      containers:
+      - name: {{ .Chart.Name }}
+        image: {{ .Values.image.repository }}:{{ .Values.image.tag }}
+        imagePullPolicy: IfNotPresent
+        ports:
+        - containerPort: {{ .Values.containerPort }}
+        env:
+        - name: RABBITMQ_HOST
+          value: {{ .Values.rabbitmq.host | quote }}
+        - name: RABBITMQ_PORT
+          value: {{ .Values.rabbitmq.port | quote }}
+        - name: RABBITMQ_USER
+          value: {{ .Values.rabbitmq.username | quote }}
+        - name: RABBITMQ_PASSWORD
+          value: {{ .Values.rabbitmq.password | quote }}
+        - name: RABBITMQ_QUEUE
+          value: {{ .Values.rabbitmq.queue | quote }}

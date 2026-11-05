@@ -1,0 +1,13 @@
+apiVersion: v1
+kind: Service
+metadata:
+    name: {{ .Release.Name }}-management
+spec:
+    type: {{ .Values.management.service.type }}
+    selector:
+        app: {{ .Chart.Name }}
+    ports:
+        - name: management
+          protocol: TCP
+          port: {{ .Values.management.service.port }}
+          targetPort: {{ .Values.managementPort }}

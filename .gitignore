@@ -1,0 +1,12 @@
+# Python
+__pycache__/
+*.py[oc]
+build/
+dist/
+wheels/
+*.egg-info
+.venv/
+
+# Local tooling
+.claude/settings.local.json
+.DS_Store
