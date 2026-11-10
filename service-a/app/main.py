@@ -36,4 +36,5 @@ async def publish(msg: str):
     await app.state.channel.default_exchange.publish(
         aio_pika.Message(body=msg.encode()), routing_key="demo"
     )
+    
     return {"sent": msg}
