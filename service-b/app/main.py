@@ -16,6 +16,7 @@ QUEUE_NAME = os.environ.get("RABBITMQ_QUEUE", "demo")
 async def handle_message(message: AbstractIncomingMessage):
     async with message.process():                  
         print(f"[service-b] received: {message.body.decode()}", flush=True)
+        message = message.body.decode()        
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):

@@ -11,7 +11,7 @@ rabbitmq:
   port: 5672
   username: guest
   password: guest          # use a Secret for anything real
-  queue: demo-b
+  queue: demo
 
 service:
   type: LoadBalancer
