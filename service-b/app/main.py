@@ -3,6 +3,7 @@ from aio_pika import connect_robust
 from aio_pika.abc import AbstractIncomingMessage
 from contextlib import asynccontextmanager
 from fastapi import FastAPI
+from .agent import trigger_llm_pipeline
 
 RABBITMQ_URL = "amqp://{u}:{p}@{h}:{port}/".format(
     u=os.environ["RABBITMQ_USER"],
@@ -17,6 +18,7 @@ async def handle_message(message: AbstractIncomingMessage):
     async with message.process():                  
         print(f"[service-b] received: {message.body.decode()}", flush=True)
         message = message.body.decode()        
+        trigger_llm_pipeline(message)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
